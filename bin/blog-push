@@ -1,0 +1,102 @@
+#!/usr/bin/env node
+// 高亮打印
+const chalk = require('chalk')
+
+const program = require('commander')
+
+const shell = require('shelljs')
+
+const path = require('path')
+// 文件是否存在
+const exists = require('fs').existsSync
+
+const { copyDir } = require('../lib/file')
+
+// 删除文件夹
+const rm = require('rimraf').sync
+
+console.log(__dirname, '__dirname')
+
+// 命令在哪个目录下执行的
+const cwdPath = process.cwd()
+
+// 配置commander使用方法
+program
+  .usage('<github-name> [project-name]')
+  .option('-g, --github', 'use git init')
+  .option('-p, --path', 'project base path')
+
+/**
+ * Help.
+*/
+
+program.on('--help', () => {
+  console.log('  Examples:')
+  console.log()
+  console.log(chalk.gray('    # blog push -g artadmire -p ./public'))
+  console.log()
+  console.log()
+})
+
+function help () {
+  program.parse(process.argv)
+  console.log(program.args, 'args')
+  if (program.args.length < 0) {
+    program.help()
+  }
+}
+help()
+
+const userGitHubName = program.args[0]
+
+const basePath = program.args[1] || './'
+
+const distPath = path.join(cwdPath, basePath)
+
+const localGitPath = path.join(__dirname, '../git/.git')
+
+const gitPath = path.join(cwdPath, basePath, '.git')
+
+console.log(distPath, localGitPath, gitPath)
+
+if (!shell.which('git')) {
+  shell.echo('Sorry, this script requires git')
+  shell.exit(1)
+}
+// git init --template ../zwac 复制模板仓库
+
+if (exists(distPath)) {
+  console.log('存在')
+  run()
+} else {
+  console.log(chalk('不存在'))
+}
+
+process.on('exit', () => {
+  console.log('结束')
+})
+
+function run () {
+  shell.cd(basePath)
+
+  // node_modules不存在仓库 一般是第一次使用
+  if (!exists(localGitPath)) {
+    shell.exec(`git init`)
+    next()
+  } else {
+    console.log('开始复制')
+    copyDir(localGitPath, gitPath, next)
+  }
+}
+
+function next () {
+  console.log('仓库初始化成功，开始递交代码')
+  shell.exec(`git add .`)
+  shell.exec(`git commit -m "docs: e"`)
+  shell.exec(`git push https://github.com/${userGitHubName}/test-blog-push.git master -f`)
+  rm(localGitPath)
+  copyDir(gitPath, localGitPath, () => {
+    console.log('完成复制')
+    shell.exit(1)
+  })
+}

@@ -1,0 +1,46 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "A simple tool for publishing vuepress projects.",
+  "preferGlobal": true,
+  "bin": {
+    "blog": "bin/blog",
+    "blog-init": "bin/blog-init",
+    "blog-publish": "bin/blog-publish"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuejs/vue-cli.git"
+  },
+  "keywords": [
+    "vuepress",
+    "publish",
+    "git"
+  ],
+  "author": "Mai Le",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vuejs/vue-cli/issues"
+  },
+  "homepage": "https://github.com/vuejs/vue-cli#readme",
+  "scripts": {
+    "test": "npm run lint && npm run e2e"
+  },
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "commander": "^2.9.0",
+    "inquirer": "^6.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^3.19.0",
+    "eslint-plugin-vue-libs": "^1.2.1",
+    "execa": "^0.8.0",
+    "mocha": "^3.5.3",
+    "shell": "^0.9.4"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  }
+}
