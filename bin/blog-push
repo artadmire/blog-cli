@@ -39,7 +39,7 @@ program
 program.on('--help', () => {
   console.log('  Examples:')
   console.log()
-  console.log(chalk.gray('    # blog push -g artadmire -p ./public'))
+  console.log(chalk.gray('    # gxblog push -g artadmire -p ./public'))
   console.log()
   console.log()
 })

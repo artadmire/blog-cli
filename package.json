@@ -1,11 +1,11 @@
 {
-  "name": "gblog",
+  "name": "gxblog",
   "version": "1.0.0",
   "description": "A simple tool for publishing vuepress projects.",
   "preferGlobal": true,
   "bin": {
-    "gblog": "bin/blog",
-    "gblog-publish": "bin/blog-publish"
+    "gxblog": "bin/blog",
+    "gxblog-publish": "bin/blog-publish"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "git",
     "push"
   ],
-  "author": "Mai Le",
+  "author": "mailele",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/artadmire/blog-cli/issues"
