@@ -1,26 +1,22 @@
-
+# 说明
 
 A simple tool for publishing vuepress projects.
 
-### Installation
+# Installation
 
 Prerequisites: [Node.js](https://nodejs.org/en/) (>=6.x, 8.x preferred), npm version 3+ and [Git](https://git-scm.com/).
 
 ``` bash
-$ npm install -g vuepress-p
+$ npm install -g blog
 // 或者
-npm install -D vuepress-p
+npm install -D blog
 ```
 
-### Usage
+## Example:
 
-``` bash
-// 后面可以代码git commit -m 的描述 default Auto-commit
-$ vuepress-p <commit desc>
++ artadmire： github用户名
 
-```
-
-Example:
++ ./public vuepress项目打包后的文件目录
 
 ``` bash
 $ blog push -g artadmire -p ./public
