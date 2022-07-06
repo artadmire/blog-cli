@@ -4,6 +4,8 @@ const chalk = require('chalk')
 
 const program = require('commander')
 
+const events = require('events')
+
 const shell = require('shelljs')
 
 const path = require('path')
@@ -12,8 +14,12 @@ const exists = require('fs').existsSync
 
 const { copyDir } = require('../lib/file')
 
+const { ask } = require('../lib/ask')
+
 // 删除文件夹
 const rm = require('rimraf').sync
+
+const eventEmitter = new events.EventEmitter()
 
 console.log(__dirname, '__dirname')
 
@@ -47,56 +53,84 @@ function help () {
 }
 help()
 
-const userGitHubName = program.args[0]
+const gitHubUseName = program.args[0]
 
 const basePath = program.args[1] || './'
 
 const distPath = path.join(cwdPath, basePath)
 
-const localGitPath = path.join(__dirname, '../git/.git')
+const blogCliGitPath = path.join(__dirname, '../git/.git')
 
-const gitPath = path.join(cwdPath, basePath, '.git')
+const localGitPath = path.join(cwdPath, basePath, '.git')
 
-console.log(distPath, localGitPath, gitPath)
+let answerObj = null
+
+console.log('distPath', distPath)
+console.log('blogCliGitPath', blogCliGitPath)
+console.log('localGitPath', localGitPath)
 
 if (!shell.which('git')) {
   shell.echo('Sorry, this script requires git')
   shell.exit(1)
 }
-// git init --template ../zwac 复制模板仓库
 
 if (exists(distPath)) {
-  console.log('存在')
-  run()
+  console.log('distPath exist ')
+  ask().then((answers) => {
+    answerObj = answers
+    run()
+  })
+  .catch((e) => {
+    console.log(e)
+  })
 } else {
-  console.log(chalk('不存在'))
+  console.log(chalk.red(`distPath not exist`))
+  shell.exit(1)
 }
 
 process.on('exit', () => {
-  console.log('结束')
+  console.log('end')
 })
 
 function run () {
   shell.cd(basePath)
 
-  // node_modules不存在仓库 一般是第一次使用
-  if (!exists(localGitPath)) {
-    shell.exec(`git init`)
-    next()
+  if (exists(localGitPath)) {
+    rm(blogCliGitPath)
+    copyDir(localGitPath, blogCliGitPath, () => eventEmitter.emit('copyDirLToC'))
   } else {
-    console.log('开始复制')
-    copyDir(localGitPath, gitPath, next)
+    checkGitPath()
   }
 }
 
 function next () {
-  console.log('仓库初始化成功，开始递交代码')
+  const { commitMsg } = answerObj
   shell.exec(`git add .`)
-  shell.exec(`git commit -m "docs: e"`)
-  shell.exec(`git push https://github.com/${userGitHubName}/test-blog-push.git master -f`)
-  rm(localGitPath)
-  copyDir(gitPath, localGitPath, () => {
-    console.log('完成复制')
+  shell.exec(`git commit -m "${commitMsg}"`)
+  shell.exec(`git push https://github.com/${gitHubUseName}/${gitHubUseName}.github.io.git.git master`)
+  rm(blogCliGitPath)
+  copyDir(localGitPath, blogCliGitPath, () => {
     shell.exit(1)
   })
 }
+
+function checkGitPath () {
+   // node_modules不存在仓库 一般是第一次使用
+  if (!exists(blogCliGitPath)) {
+    shell.exec(`git init`)
+    next()
+  } else {
+    console.log('copy blogCliGitPath to localGitPath')
+    copyDir(blogCliGitPath, localGitPath, () => eventEmitter.emit('copyDirCToL'))
+  }
+}
+
+// local-cli
+eventEmitter.on('copyDirLToC', () => {
+  next()
+})
+
+// cli-local
+eventEmitter.on('copyDirCToL', () => {
+  next()
+})
