@@ -7,9 +7,9 @@ A simple tool for publishing vuepress projects.
 Prerequisites: [Node.js](https://nodejs.org/en/) (>=6.x, 8.x preferred), npm version 3+ and [Git](https://git-scm.com/).
 
 ``` bash
-$ npm install -g blog
+$ npm install -g gblog
 // 或者
-npm install -D blog
+npm install -D gblog
 ```
 
 ## Example:
@@ -19,7 +19,7 @@ npm install -D blog
 + ./public vuepress项目打包后的文件目录
 
 ``` bash
-$ blog push -g artadmire -p ./public
+$ gblog push -g artadmire -p ./public
 ```
 
 上面命令将会将你的vuepress博客发布发到github.

@@ -1,12 +1,11 @@
 {
-  "name": "blog",
+  "name": "gblog",
   "version": "1.0.0",
   "description": "A simple tool for publishing vuepress projects.",
   "preferGlobal": true,
   "bin": {
-    "blog": "bin/blog",
-    "blog-init": "bin/blog-init",
-    "blog-publish": "bin/blog-publish"
+    "gblog": "bin/blog",
+    "gblog-publish": "bin/blog-publish"
   },
   "repository": {
     "type": "git",
@@ -31,11 +30,8 @@
     "inquirer": "^6.0.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
     "eslint": "^3.19.0",
-    "eslint-plugin-vue-libs": "^1.2.1",
     "execa": "^0.8.0",
-    "mocha": "^3.5.3",
     "shell": "^0.9.4"
   },
   "engines": {
