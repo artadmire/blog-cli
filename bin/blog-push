@@ -107,7 +107,7 @@ function next () {
   const { commitMsg } = answerObj
   shell.exec(`git add .`)
   shell.exec(`git commit -m "${commitMsg}"`)
-  shell.exec(`git push https://github.com/${gitHubUseName}/${gitHubUseName}.github.io.git.git master`)
+  shell.exec(`git push https://github.com/${gitHubUseName}/${gitHubUseName}.github.io.git master`)
   rm(blogCliGitPath)
   copyDir(localGitPath, blogCliGitPath, () => {
     shell.exit(1)
