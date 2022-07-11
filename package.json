@@ -32,7 +32,8 @@
   "devDependencies": {
     "eslint": "^3.19.0",
     "execa": "^0.8.0",
-    "shell": "^0.9.4"
+    "shell": "^0.9.4",
+    "shelljs": "^0.8.5"
   },
   "engines": {
     "node": ">=6.0.0"
