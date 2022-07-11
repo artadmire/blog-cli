@@ -27,13 +27,11 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "commander": "^9.3.0",
-    "inquirer": "^6.0.0"
+    "inquirer": "^6.0.0",
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
-    "execa": "^0.8.0",
-    "shell": "^0.9.4",
-    "shelljs": "^0.8.5"
+    "eslint": "^3.19.0"
   },
   "engines": {
     "node": ">=6.0.0"
